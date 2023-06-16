@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.bishe.mapper.EmspMapper">
+    
+    <resultMap type="Emsp" id="EmspResult">
+        <result property="courseId"    column="course_id"    />
+        <result property="courseObjectives"    column="course_objectives"    />
+        <result property="requirementPoints"    column="requirement_points"    />
+        <result property="midtermSco"    column="midterm_sco"    />
+        <result property="homeworkSco"    column="homework_sco"    />
+        <result property="quizSco"    column="quiz_sco"    />
+        <result property="largeSco"    column="large_sco"    />
+        <result property="experimentSco"    column="experiment_sco"    />
+        <result property="replySco"    column="reply_sco"    />
+        <result property="thesisSco"    column="thesis_sco"    />
+        <result property="finalSco"    column="final_sco"    />
+        <result property="ratio"    column="ratio"    />
+    </resultMap>
+
+    <sql id="selectEmspVo">
+        select course_id, course_objectives, requirement_points, midterm_sco, homework_sco, quiz_sco, large_sco, experiment_sco, reply_sco, thesis_sco, final_sco, ratio from tb_emsp
+    </sql>
+
+    <select id="selectEmspList" parameterType="Emsp" resultMap="EmspResult">
+        <include refid="selectEmspVo"/>
+        <where>  
+            <if test="courseId != null "> and course_id = #{courseId}</if>
+            <if test="courseObjectives != null  and courseObjectives != ''"> and course_objectives = #{courseObjectives}</if>
+        </where>
+    </select>
+    
+    <select id="selectEmspByCourseId"  resultMap="EmspResult">
+        <include refid="selectEmspVo"/>
+        where course_id = #{courseId} and course_objectives =#{courseObjectives}
+    </select>
+
+    <select id="selectCount"  resultType="int" >
+        select count(*) from tb_emsp where course_id = #{courseId};
+    </select>
+    <select id="selectEmspByCourseIdList" parameterType="Emsp" resultMap="EmspResult">
+        <include refid="selectEmspVo"/>
+        where course_id in
+        <foreach item="courseId" collection="list" open="(" separator="," close=")">
+            #{courseId}
+        </foreach>
+    </select>
+
+    <insert id="insertEmsp" parameterType="Emsp">
+        insert into tb_emsp
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">course_id,</if>
+            <if test="courseObjectives != null">course_objectives,</if>
+            <if test="requirementPoints != null">requirement_points,</if>
+            <if test="midtermSco != null">midterm_sco,</if>
+            <if test="homeworkSco != null">homework_sco,</if>
+            <if test="quizSco != null">quiz_sco,</if>
+            <if test="largeSco != null">large_sco,</if>
+            <if test="experimentSco != null">experiment_sco,</if>
+            <if test="replySco != null">reply_sco,</if>
+            <if test="thesisSco != null">thesis_sco,</if>
+            <if test="finalSco != null">final_sco,</if>
+            <if test="ratio != null">ratio,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">#{courseId},</if>
+            <if test="courseObjectives != null">#{courseObjectives},</if>
+            <if test="requirementPoints != null">#{requirementPoints},</if>
+            <if test="midtermSco != null">#{midtermSco},</if>
+            <if test="homeworkSco != null">#{homeworkSco},</if>
+            <if test="quizSco != null">#{quizSco},</if>
+            <if test="largeSco != null">#{largeSco},</if>
+            <if test="experimentSco != null">#{experimentSco},</if>
+            <if test="replySco != null">#{replySco},</if>
+            <if test="thesisSco != null">#{thesisSco},</if>
+            <if test="finalSco != null">#{finalSco},</if>
+            <if test="ratio != null">#{ratio},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEmsp" parameterType="Emsp">
+        update tb_emsp
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="courseObjectives != null">course_objectives = #{courseObjectives},</if>
+            <if test="requirementPoints != null">requirement_points = #{requirementPoints},</if>
+            <if test="midtermSco != null">midterm_sco = #{midtermSco},</if>
+            <if test="homeworkSco != null">homework_sco = #{homeworkSco},</if>
+            <if test="quizSco != null">quiz_sco = #{quizSco},</if>
+            <if test="largeSco != null">large_sco = #{largeSco},</if>
+            <if test="experimentSco != null">experiment_sco = #{experimentSco},</if>
+            <if test="replySco != null">reply_sco = #{replySco},</if>
+            <if test="thesisSco != null">thesis_sco = #{thesisSco},</if>
+            <if test="finalSco != null">final_sco = #{finalSco},</if>
+            <if test="ratio != null">ratio = #{ratio},</if>
+        </trim>
+        where course_id = #{courseId} and course_objectives = #{courseObjectives}
+    </update>
+
+    <delete id="deleteEmspByCourseId" parameterType="Integer">
+        delete from tb_emsp where course_id = #{courseId}
+    </delete>
+
+    <delete id="deleteEmspByCourseIds" parameterType="String">
+        delete from tb_emsp where course_id in 
+        <foreach item="courseId" collection="array" open="(" separator="," close=")">
+            #{courseId}
+        </foreach>
+    </delete>
+    <delete id="deleteEmspByCourseIdAndObj">
+        delete from tb_emsp
+        where course_id = #{courseId} and course_objectives =#{courseObjectives}
+    </delete>
+</mapper>

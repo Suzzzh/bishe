@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.bishe.mapper.FinalexamscoredistributionMapper">
+    
+    <resultMap type="Finalexamscoredistribution" id="FinalexamscoredistributionResult">
+        <result property="courseId"    column="course_id"    />
+        <result property="courseObjectives"    column="course_objectives"    />
+        <result property="maxSco"    column="max_sco"    />
+        <result property="firQue"    column="fir_que"    />
+        <result property="secQue"    column="sec_que"    />
+        <result property="thiQue"    column="thi_que"    />
+        <result property="fouQue"    column="fou_que"    />
+        <result property="fifQue"    column="fif_que"    />
+        <result property="sixQue"    column="six_que"    />
+        <result property="sevQue"    column="sev_que"    />
+        <result property="eigQue"    column="eig_que"    />
+        <result property="ninQue"    column="nin_que"    />
+        <result property="tenQue"    column="ten_que"    />
+    </resultMap>
+
+    <sql id="selectFinalexamscoredistributionVo">
+        select course_id, course_objectives, max_sco, fir_que, sec_que, thi_que, fou_que, fif_que, six_que, sev_que, eig_que, nin_que, ten_que from tb_finalexamscoredistribution
+    </sql>
+
+    <select id="selectFinalexamscoredistributionList" parameterType="Finalexamscoredistribution" resultMap="FinalexamscoredistributionResult">
+        <include refid="selectFinalexamscoredistributionVo"/>
+        <where>  
+            <if test="courseId != null "> and course_id = #{courseId}</if>
+        </where>
+    </select>
+    
+    <select id="selectFinalexamscoredistributionByCourseId"  resultMap="FinalexamscoredistributionResult">
+        <include refid="selectFinalexamscoredistributionVo"/>
+        where course_id = #{courseId} and course_objectives =#{courseObjectives}
+    </select>
+
+    <select id="selectMaxScoByCourseIdandObjectives"  resultMap="FinalexamscoredistributionResult">
+        select max_sco from tb_finalexamscoredistribution
+        where course_id = #{courseId} and course_objectives =#{courseObjectives}
+    </select>
+
+
+
+    <insert id="insertFinalexamscoredistribution" parameterType="Finalexamscoredistribution">
+        insert into tb_finalexamscoredistribution
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">course_id,</if>
+            <if test="courseObjectives != null">course_objectives,</if>
+            <if test="maxSco != null">max_sco,</if>
+            <if test="firQue != null">fir_que,</if>
+            <if test="secQue != null">sec_que,</if>
+            <if test="thiQue != null">thi_que,</if>
+            <if test="fouQue != null">fou_que,</if>
+            <if test="fifQue != null">fif_que,</if>
+            <if test="sixQue != null">six_que,</if>
+            <if test="sevQue != null">sev_que,</if>
+            <if test="eigQue != null">eig_que,</if>
+            <if test="ninQue != null">nin_que,</if>
+            <if test="tenQue != null">ten_que,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">#{courseId},</if>
+            <if test="courseObjectives != null">#{courseObjectives},</if>
+            <if test="maxSco != null">#{maxSco},</if>
+            <if test="firQue != null">#{firQue},</if>
+            <if test="secQue != null">#{secQue},</if>
+            <if test="thiQue != null">#{thiQue},</if>
+            <if test="fouQue != null">#{fouQue},</if>
+            <if test="fifQue != null">#{fifQue},</if>
+            <if test="sixQue != null">#{sixQue},</if>
+            <if test="sevQue != null">#{sevQue},</if>
+            <if test="eigQue != null">#{eigQue},</if>
+            <if test="ninQue != null">#{ninQue},</if>
+            <if test="tenQue != null">#{tenQue},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFinalexamscoredistribution" parameterType="Finalexamscoredistribution">
+        update tb_finalexamscoredistribution
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="courseObjectives != null">course_objectives = #{courseObjectives},</if>
+            <if test="maxSco != null">max_sco = #{maxSco},</if>
+            <if test="firQue != null">fir_que = #{firQue},</if>
+            <if test="secQue != null">sec_que = #{secQue},</if>
+            <if test="thiQue != null">thi_que = #{thiQue},</if>
+            <if test="fouQue != null">fou_que = #{fouQue},</if>
+            <if test="fifQue != null">fif_que = #{fifQue},</if>
+            <if test="sixQue != null">six_que = #{sixQue},</if>
+            <if test="sevQue != null">sev_que = #{sevQue},</if>
+            <if test="eigQue != null">eig_que = #{eigQue},</if>
+            <if test="ninQue != null">nin_que = #{ninQue},</if>
+            <if test="tenQue != null">ten_que = #{tenQue},</if>
+        </trim>
+        where course_id = #{courseId} and course_objectives = #{courseObjectives}
+    </update>
+
+    <delete id="deleteFinalexamscoredistributionByCourseId" >
+        delete from tb_finalexamscoredistribution
+        where course_id = #{courseId} and course_objectives =#{courseObjectives}
+    </delete>
+
+    <delete id="deleteFinalexamscoredistributionByCourseIds" parameterType="String">
+        delete from tb_finalexamscoredistribution where course_id in 
+        <foreach item="courseId" collection="array" open="(" separator="," close=")">
+            #{courseId}
+        </foreach>
+    </delete>
+
+    <select id="countFirQue"  resultType="java.math.BigDecimal">
+        select sum(fir_que) from tb_finalexamscoredistribution where course_id = #{courseId}
+    </select>
+    <select id="countSecQue" resultType="java.math.BigDecimal">
+        select sum(sec_que) from tb_finalexamscoredistribution where course_id = #{courseId}
+    </select>
+    <select id="countThiQue" resultType="java.math.BigDecimal">
+        select sum(thi_que) from tb_finalexamscoredistribution where course_id = #{courseId}
+    </select>
+    <select id="countFouQue" resultType="java.math.BigDecimal">
+        select sum(fou_que) from tb_finalexamscoredistribution where course_id = #{courseId}
+    </select>
+    <select id="countFifQue" resultType="java.math.BigDecimal">
+        select sum(fif_que) from tb_finalexamscoredistribution where course_id = #{courseId}
+    </select>
+    <select id="countSixQue" resultType="java.math.BigDecimal">
+        select sum(six_que) from tb_finalexamscoredistribution where course_id = #{courseId}
+    </select>
+    <select id="countSevQue" resultType="java.math.BigDecimal">
+        select sum(sev_que) from tb_finalexamscoredistribution where course_id = #{courseId}
+    </select>
+    <select id="countEigQue" resultType="java.math.BigDecimal">
+        select sum(eig_que) from tb_finalexamscoredistribution where course_id = #{courseId}
+    </select>
+    <select id="countNinQue" resultType="java.math.BigDecimal">
+        select sum(nin_que) from tb_finalexamscoredistribution where course_id = #{courseId}
+    </select>
+    <select id="countTenQue" resultType="java.math.BigDecimal">
+        select sum(ten_que) from tb_finalexamscoredistribution where course_id = #{courseId}
+    </select>
+    <select id="selectFinalexamscoredistributionByCourseIdList"
+            parameterType="Finalexamscoredistribution" resultMap="FinalexamscoredistributionResult">
+        <include refid="selectFinalexamscoredistributionVo"></include>
+        where course_id in
+        <foreach item="courseId" collection="list" open="(" separator="," close=")">
+            #{courseId}
+        </foreach>
+    </select>
+
+</mapper>

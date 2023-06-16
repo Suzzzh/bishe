@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.bishe.mapper.AchievedataMapper">
+    
+    <resultMap type="Achievedata" id="AchievedataResult">
+        <result property="id"    column="id"    />
+        <result property="studentNumber"    column="student_number"    />
+        <result property="studentName"    column="student_name"    />
+        <result property="co1"    column="co1"    />
+        <result property="co2"    column="co2"    />
+        <result property="co3"    column="co3"    />
+        <result property="co4"    column="co4"    />
+        <result property="co5"    column="co5"    />
+        <result property="co6"    column="co6"    />
+        <result property="co7"    column="co7"    />
+        <result property="co8"    column="co8"    />
+    </resultMap>
+
+    <sql id="selectAchievedataVo">
+        select id, student_number, student_name, co1, co2, co3, co4, co5, co6, co7, co8 from tb_achievedata
+    </sql>
+
+    <select id="selectAchievedataList" parameterType="Achievedata" resultMap="AchievedataResult">
+        <include refid="selectAchievedataVo"/>
+        <where>  
+            <if test="studentNumber != null  and studentNumber != ''"> and student_number = #{studentNumber}</if>
+            <if test="studentName != null  and studentName != ''"> and student_name like concat('%', #{studentName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectAchievedataById" parameterType="Integer" resultMap="AchievedataResult">
+        <include refid="selectAchievedataVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertAchievedata" parameterType="Achievedata">
+        insert into tb_achievedata
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="studentNumber != null">student_number,</if>
+            <if test="studentName != null">student_name,</if>
+            <if test="co1 != null">co1,</if>
+            <if test="co2 != null">co2,</if>
+            <if test="co3 != null">co3,</if>
+            <if test="co4 != null">co4,</if>
+            <if test="co5 != null">co5,</if>
+            <if test="co6 != null">co6,</if>
+            <if test="co7 != null">co7,</if>
+            <if test="co8 != null">co8,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="studentNumber != null">#{studentNumber},</if>
+            <if test="studentName != null">#{studentName},</if>
+            <if test="co1 != null">#{co1},</if>
+            <if test="co2 != null">#{co2},</if>
+            <if test="co3 != null">#{co3},</if>
+            <if test="co4 != null">#{co4},</if>
+            <if test="co5 != null">#{co5},</if>
+            <if test="co6 != null">#{co6},</if>
+            <if test="co7 != null">#{co7},</if>
+            <if test="co8 != null">#{co8},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAchievedata" parameterType="Achievedata">
+        update tb_achievedata
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="studentNumber != null">student_number = #{studentNumber},</if>
+            <if test="studentName != null">student_name = #{studentName},</if>
+            <if test="co1 != null">co1 = #{co1},</if>
+            <if test="co2 != null">co2 = #{co2},</if>
+            <if test="co3 != null">co3 = #{co3},</if>
+            <if test="co4 != null">co4 = #{co4},</if>
+            <if test="co5 != null">co5 = #{co5},</if>
+            <if test="co6 != null">co6 = #{co6},</if>
+            <if test="co7 != null">co7 = #{co7},</if>
+            <if test="co8 != null">co8 = #{co8},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAchievedataById" parameterType="Integer">
+        delete from tb_achievedata where id = #{id}
+    </delete>
+
+    <delete id="deleteAchievedataByIds" parameterType="String">
+        delete from tb_achievedata where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteAchievedataByIdAndNum">
+        delete from tb_achievedata
+        where id =#{id} and student_number = #{studentNumber}
+    </delete>
+
+
+    <select id="selectAchievedataByCourseIdList" parameterType="Achievedata" resultMap="AchievedataResult">
+        <include refid="selectAchievedataVo"></include>
+        where course_id in
+        <foreach item="courseId" collection="list" open="(" separator="," close=")">
+            #{courseId}
+        </foreach>
+    </select>
+
+</mapper>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.bishe.mapper.CourseMapper">
+    
+    <resultMap type="Course" id="CourseResult">
+        <result property="courseId"    column="course_id"    />
+        <result property="courseName"    column="course_name"    />
+        <result property="term"    column="term"    />
+        <result property="xueqi"    column="xueqi"    />
+        <result property="teacherName"    column="teacher_name"    />
+        <result property="major"    column="major"    />
+        <result property="classHour"    column="class_hour"    />
+        <result property="credit"    column="credit"    />
+    </resultMap>
+
+    <sql id="selectCourseVo">
+        select course_id, course_name, term, xueqi,teacher_name, major, class_hour, credit from tb_course
+    </sql>
+
+    <select id="selectCourseList" parameterType="Course" resultMap="CourseResult">
+        <include refid="selectCourseVo"/>
+        <where>  
+            <if test="courseId != null "> and course_id = #{courseId}</if>
+            <if test="courseName != null  and courseName != ''"> and course_name like concat('%', #{courseName}, '%')</if>
+            <if test="teacherName != null  and teacherName != ''"> and teacher_name like concat('%', #{teacherName}, '%')</if>
+            <if test="major != null  and major != ''"> and major = #{major}</if>
+        </where>
+    </select>
+
+    <select id="selectCourseByCourseId" parameterType="Integer" resultMap="CourseResult">
+        <include refid="selectCourseVo"/>
+        where course_id = #{courseId}
+    </select>
+    <select id="selectMajor" resultType="java.lang.String">
+    select dept_name from sys_dept where dept_id=#{deptId}
+     </select>
+
+
+    <insert id="insertCourse" parameterType="Course">
+        insert into tb_course
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">course_id,</if>
+            <if test="courseName != null">course_name,</if>
+            <if test="term != null">term,</if>
+            <if test="xueqi != null">xueqi,</if>
+            <if test="teacherName != null">teacher_name,</if>
+            <if test="major != null">major,</if>
+            <if test="classHour != null">class_hour,</if>
+            <if test="credit != null">credit,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">#{courseId},</if>
+            <if test="courseName != null">#{courseName},</if>
+            <if test="term != null">#{term},</if>
+            <if test="xueqi != null">#{xueqi},</if>
+            <if test="teacherName != null">#{teacherName},</if>
+            <if test="major != null">#{major},</if>
+            <if test="classHour != null">#{classHour},</if>
+            <if test="credit != null">#{credit},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCourse" parameterType="Course">
+        update tb_course
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="courseName != null">course_name = #{courseName},</if>
+            <if test="term != null">term = #{term},</if>
+            <if test="xueqi != null">xueqi = #{xueqi},</if>
+            <if test="teacherName != null">teacher_name = #{teacherName},</if>
+            <if test="major != null">major = #{major},</if>
+            <if test="classHour != null">class_hour = #{classHour},</if>
+            <if test="credit != null">credit = #{credit},</if>
+        </trim>
+        where course_id = #{courseId}
+    </update>
+
+    <delete id="deleteCourseByCourseId" parameterType="Integer">
+        delete from tb_course where course_id = #{courseId}
+    </delete>
+
+    <delete id="deleteCourseByCourseIds" parameterType="String">
+        delete from tb_course where course_id in 
+        <foreach item="courseId" collection="array" open="(" separator="," close=")">
+            #{courseId}
+        </foreach>
+    </delete>
+
+    <select id="selectCourseNameById" resultType="java.lang.String">
+        select course_name from tb_course
+        where course_id=#{courseId}
+    </select>
+
+    <select id="selectCourseMajorById" resultType="java.lang.String">
+        select major from tb_course
+        where course_id=#{courseId}
+    </select>
+    <select id="selectCourseIdListByName" resultType="java.lang.Integer">
+        select course_id from tb_course where teacher_name=#{teacherName}
+    </select>
+    <select id="selectCourseIdListByMajor" resultType="java.lang.Integer">
+        select course_id from tb_course where major=#{major}
+    </select>
+
+</mapper>

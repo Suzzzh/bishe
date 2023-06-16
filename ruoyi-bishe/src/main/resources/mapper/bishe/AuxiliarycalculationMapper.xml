@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.bishe.mapper.AuxiliarycalculationMapper">
+    
+    <resultMap type="Auxiliarycalculation" id="AuxiliarycalculationResult">
+        <result property="courseId"    column="course_id"    />
+        <result property="firMax"    column="fir_max"    />
+        <result property="secMax"    column="sec_max"    />
+        <result property="thiMax"    column="thi_max"    />
+        <result property="fouMax"    column="fou_max"    />
+        <result property="fifMax"    column="fif_max"    />
+        <result property="sixMax"    column="six_max"    />
+        <result property="sevMax"    column="sev_max"    />
+        <result property="eigMax"    column="eig_max"    />
+        <result property="ninMax"    column="nin_max"    />
+        <result property="tenMax"    column="ten_max"    />
+        <result property="midtermMax"    column="midterm_max"    />
+        <result property="homeworkMax"    column="homework_max"    />
+        <result property="quizMax"    column="quiz_max"    />
+        <result property="largeMax"    column="large_max"    />
+        <result property="experimentMax"    column="experiment_max"    />
+        <result property="replyMax"    column="reply_max"    />
+        <result property="thesisMax"    column="thesis_max"    />
+    </resultMap>
+
+    <sql id="selectAuxiliarycalculationVo">
+        select course_id, fir_max, sec_max, thi_max, fou_max, fif_max, six_max, sev_max, eig_max, nin_max, ten_max, midterm_max, homework_max, quiz_max, large_max, experiment_max, reply_max, thesis_max from tb_auxiliarycalculation
+    </sql>
+
+    <select id="selectAuxiliarycalculationList" parameterType="Auxiliarycalculation" resultMap="AuxiliarycalculationResult">
+        <include refid="selectAuxiliarycalculationVo"/>
+        <where>  
+            <if test="courseId != null "> and course_id = #{courseId}</if>
+        </where>
+    </select>
+    
+    <select id="selectAuxiliarycalculationByCourseId" parameterType="Integer" resultMap="AuxiliarycalculationResult">
+        <include refid="selectAuxiliarycalculationVo"/>
+        where course_id = #{courseId}
+    </select>
+    <select id="selectAuxiliarycalculationByCourseIdList"
+            parameterType="Auxiliarycalculation" resultMap="AuxiliarycalculationResult">
+        <include refid="selectAuxiliarycalculationVo"/>
+        where course_id in
+        <foreach item="courseId" collection="list" open="(" separator="," close=")">
+            #{courseId}
+        </foreach>
+    </select>
+
+    <insert id="insertAuxiliarycalculation" parameterType="Auxiliarycalculation">
+        insert into tb_auxiliarycalculation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">course_id,</if>
+            <if test="firMax != null">fir_max,</if>
+            <if test="secMax != null">sec_max,</if>
+            <if test="thiMax != null">thi_max,</if>
+            <if test="fouMax != null">fou_max,</if>
+            <if test="fifMax != null">fif_max,</if>
+            <if test="sixMax != null">six_max,</if>
+            <if test="sevMax != null">sev_max,</if>
+            <if test="eigMax != null">eig_max,</if>
+            <if test="ninMax != null">nin_max,</if>
+            <if test="tenMax != null">ten_max,</if>
+            <if test="midtermMax != null">midterm_max,</if>
+            <if test="homeworkMax != null">homework_max,</if>
+            <if test="quizMax != null">quiz_max,</if>
+            <if test="largeMax != null">large_max,</if>
+            <if test="experimentMax != null">experiment_max,</if>
+            <if test="replyMax != null">reply_max,</if>
+            <if test="thesisMax != null">thesis_max,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">#{courseId},</if>
+            <if test="firMax != null">#{firMax},</if>
+            <if test="secMax != null">#{secMax},</if>
+            <if test="thiMax != null">#{thiMax},</if>
+            <if test="fouMax != null">#{fouMax},</if>
+            <if test="fifMax != null">#{fifMax},</if>
+            <if test="sixMax != null">#{sixMax},</if>
+            <if test="sevMax != null">#{sevMax},</if>
+            <if test="eigMax != null">#{eigMax},</if>
+            <if test="ninMax != null">#{ninMax},</if>
+            <if test="tenMax != null">#{tenMax},</if>
+            <if test="midtermMax != null">#{midtermMax},</if>
+            <if test="homeworkMax != null">#{homeworkMax},</if>
+            <if test="quizMax != null">#{quizMax},</if>
+            <if test="largeMax != null">#{largeMax},</if>
+            <if test="experimentMax != null">#{experimentMax},</if>
+            <if test="replyMax != null">#{replyMax},</if>
+            <if test="thesisMax != null">#{thesisMax},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAuxiliarycalculation" parameterType="Auxiliarycalculation">
+        update tb_auxiliarycalculation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="firMax != null">fir_max = #{firMax},</if>
+            <if test="secMax != null">sec_max = #{secMax},</if>
+            <if test="thiMax != null">thi_max = #{thiMax},</if>
+            <if test="fouMax != null">fou_max = #{fouMax},</if>
+            <if test="fifMax != null">fif_max = #{fifMax},</if>
+            <if test="sixMax != null">six_max = #{sixMax},</if>
+            <if test="sevMax != null">sev_max = #{sevMax},</if>
+            <if test="eigMax != null">eig_max = #{eigMax},</if>
+            <if test="ninMax != null">nin_max = #{ninMax},</if>
+            <if test="tenMax != null">ten_max = #{tenMax},</if>
+            <if test="midtermMax != null">midterm_max = #{midtermMax},</if>
+            <if test="homeworkMax != null">homework_max = #{homeworkMax},</if>
+            <if test="quizMax != null">quiz_max = #{quizMax},</if>
+            <if test="largeMax != null">large_max = #{largeMax},</if>
+            <if test="experimentMax != null">experiment_max = #{experimentMax},</if>
+            <if test="replyMax != null">reply_max = #{replyMax},</if>
+            <if test="thesisMax != null">thesis_max = #{thesisMax},</if>
+        </trim>
+        where course_id = #{courseId}
+    </update>
+
+    <delete id="deleteAuxiliarycalculationByCourseId" parameterType="Integer">
+        delete from tb_auxiliarycalculation where course_id = #{courseId}
+    </delete>
+
+    <delete id="deleteAuxiliarycalculationByCourseIds" parameterType="String">
+        delete from tb_auxiliarycalculation where course_id in 
+        <foreach item="courseId" collection="array" open="(" separator="," close=")">
+            #{courseId}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.bishe.mapper.EvaluationpahseMapper">
+    
+    <resultMap type="Evaluationpahse" id="EvaluationpahseResult">
+        <result property="courseId"    column="course_id"    />
+        <result property="midtermSco"    column="midterm_sco"    />
+        <result property="homeworkSco"    column="homework_sco"    />
+        <result property="quizSco"    column="quiz_sco"    />
+        <result property="largeSco"    column="large_sco"    />
+        <result property="experimentSco"    column="experiment_sco"    />
+        <result property="replySco"    column="reply_sco"    />
+        <result property="thesisSco"    column="thesis_sco"    />
+        <result property="finalSco"    column="final_sco"    />
+        <result property="ratioSum"    column="ratio_sum"    />
+    </resultMap>
+
+    <sql id="selectEvaluationpahseVo">
+        select course_id, midterm_sco, homework_sco, quiz_sco, large_sco, experiment_sco, reply_sco, thesis_sco, final_sco, ratio_sum from tb_evaluationpahse
+    </sql>
+
+    <select id="selectEvaluationpahseList" parameterType="Evaluationpahse" resultMap="EvaluationpahseResult">
+        <include refid="selectEvaluationpahseVo"/>
+        <where>  
+            <if test="courseId != null "> and course_id = #{courseId}</if>
+        </where>
+    </select>
+    
+    <select id="selectEvaluationpahseByCourseId" parameterType="Integer" resultMap="EvaluationpahseResult">
+        <include refid="selectEvaluationpahseVo"/>
+        where course_id = #{courseId}
+    </select>
+
+
+    <insert id="insertEvaluationpahse" parameterType="Evaluationpahse">
+        insert into tb_evaluationpahse
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">course_id,</if>
+            <if test="midtermSco != null">midterm_sco,</if>
+            <if test="homeworkSco != null">homework_sco,</if>
+            <if test="quizSco != null">quiz_sco,</if>
+            <if test="largeSco != null">large_sco,</if>
+            <if test="experimentSco != null">experiment_sco,</if>
+            <if test="replySco != null">reply_sco,</if>
+            <if test="thesisSco != null">thesis_sco,</if>
+            <if test="finalSco != null">final_sco,</if>
+            <if test="ratioSum != null">ratio_sum,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">#{courseId},</if>
+            <if test="midtermSco != null">#{midtermSco},</if>
+            <if test="homeworkSco != null">#{homeworkSco},</if>
+            <if test="quizSco != null">#{quizSco},</if>
+            <if test="largeSco != null">#{largeSco},</if>
+            <if test="experimentSco != null">#{experimentSco},</if>
+            <if test="replySco != null">#{replySco},</if>
+            <if test="thesisSco != null">#{thesisSco},</if>
+            <if test="finalSco != null">#{finalSco},</if>
+            <if test="ratioSum != null">#{ratioSum},</if>
+         </trim>
+    </insert>
+
+
+    <update id="updateEvaluationpahse" parameterType="Evaluationpahse">
+        update tb_evaluationpahse
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="midtermSco != null">midterm_sco = #{midtermSco},</if>
+            <if test="homeworkSco != null">homework_sco = #{homeworkSco},</if>
+            <if test="quizSco != null">quiz_sco = #{quizSco},</if>
+            <if test="largeSco != null">large_sco = #{largeSco},</if>
+            <if test="experimentSco != null">experiment_sco = #{experimentSco},</if>
+            <if test="replySco != null">reply_sco = #{replySco},</if>
+            <if test="thesisSco != null">thesis_sco = #{thesisSco},</if>
+            <if test="finalSco != null">final_sco = #{finalSco},</if>
+            <if test="ratioSum != null">ratio_sum = #{ratioSum},</if>
+        </trim>
+        where course_id = #{courseId}
+    </update>
+
+    <delete id="deleteEvaluationpahseByCourseId" parameterType="Integer">
+        delete from tb_evaluationpahse where course_id = #{courseId}
+    </delete>
+
+    <delete id="deleteEvaluationpahseByCourseIds" parameterType="String">
+        delete from tb_evaluationpahse where course_id in 
+        <foreach item="courseId" collection="array" open="(" separator="," close=")">
+            #{courseId}
+        </foreach>
+    </delete>
+
+    <select id="selectEvaluationpahseByCourseIdList" parameterType="Evaluationpahse" resultMap="EvaluationpahseResult">
+        select course_id, midterm_sco, homework_sco, quiz_sco, large_sco, experiment_sco, reply_sco, thesis_sco, final_sco, ratio_sum from tb_evaluationpahse
+        where course_id in
+        <foreach item="courseId" collection="list" open="(" separator="," close=")">
+            #{courseId}
+        </foreach>
+    </select>
+</mapper>

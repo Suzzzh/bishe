@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.bishe.mapper.InputscoreMapper">
+    
+    <resultMap type="Inputscore" id="InputscoreResult">
+        <result property="id"    column="id"    />
+        <result property="studentNumber"    column="student_number"    />
+        <result property="studentName"    column="student_name"    />
+        <result property="firQue"    column="fir_que"    />
+        <result property="secQue"    column="sec_que"    />
+        <result property="thiQue"    column="thi_que"    />
+        <result property="fouQue"    column="fou_que"    />
+        <result property="fifQue"    column="fif_que"    />
+        <result property="sixQue"    column="six_que"    />
+        <result property="sevQue"    column="sev_que"    />
+        <result property="eigQue"    column="eig_que"    />
+        <result property="ninQue"    column="nin_que"    />
+        <result property="tenQue"    column="ten_que"    />
+        <result property="midtermSco"    column="midterm_sco"    />
+        <result property="homeworkSco"    column="homework_sco"    />
+        <result property="quizSco"    column="quiz_sco"    />
+        <result property="largeSco"    column="large_sco"    />
+        <result property="experimentSco"    column="experiment_sco"    />
+        <result property="replySco"    column="reply_sco"    />
+        <result property="thesisSco"    column="thesis_sco"    />
+        <result property="finalSco"    column="final_sco"    />
+        <result property="totalSco"    column="total_sco"    />
+        <result property="type"    column="type"    />
+    </resultMap>
+
+    <sql id="selectInputscoreVo">
+        select id, student_number, student_name, fir_que, sec_que, thi_que, fou_que, fif_que, six_que, sev_que, eig_que, nin_que, ten_que, midterm_sco, homework_sco, quiz_sco, large_sco, experiment_sco, reply_sco, thesis_sco, final_sco, total_sco,type from tb_inputscore
+    </sql>
+
+    <select id="selectInputscoreList" parameterType="Inputscore" resultMap="InputscoreResult">
+        <include refid="selectInputscoreVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="studentNumber != null  and studentNumber != ''"> and student_number = #{studentNumber}</if>
+            <if test="studentName != null  and studentName != ''"> and student_name like concat('%', #{studentName}, '%')</if>
+            <if test="firQue != null "> and fir_que = #{firQue}</if>
+            <if test="secQue != null "> and sec_que = #{secQue}</if>
+            <if test="thiQue != null "> and thi_que = #{thiQue}</if>
+            <if test="fouQue != null "> and fou_que = #{fouQue}</if>
+            <if test="fifQue != null "> and fif_que = #{fifQue}</if>
+            <if test="sixQue != null "> and six_que = #{sixQue}</if>
+            <if test="sevQue != null "> and sev_que = #{sevQue}</if>
+            <if test="eigQue != null "> and eig_que = #{eigQue}</if>
+            <if test="ninQue != null "> and nin_que = #{ninQue}</if>
+            <if test="tenQue != null "> and ten_que = #{tenQue}</if>
+            <if test="midtermSco != null "> and midterm_sco = #{midtermSco}</if>
+            <if test="homeworkSco != null "> and homework_sco = #{homeworkSco}</if>
+            <if test="quizSco != null "> and quiz_sco = #{quizSco}</if>
+            <if test="largeSco != null "> and large_sco = #{largeSco}</if>
+            <if test="experimentSco != null "> and experiment_sco = #{experimentSco}</if>
+            <if test="replySco != null "> and reply_sco = #{replySco}</if>
+            <if test="thesisSco != null "> and thesis_sco = #{thesisSco}</if>
+            <if test="finalSco != null "> and final_sco = #{finalSco}</if>
+            <if test="totalSco != null "> and total_sco = #{totalSco}</if>
+            <if test="type != null "> and type = #{type}</if>
+        </where>
+    </select>
+    
+    <select id="selectInputscoreById" parameterType="Integer" resultMap="InputscoreResult">
+        <include refid="selectInputscoreVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectInputscoreByIdandNum" resultMap="InputscoreResult">
+        <include refid="selectInputscoreVo"/>
+        where id =#{id} and student_number = #{studentNumber}
+    </select>
+
+
+
+    <insert id="insertInputscore" parameterType="Inputscore">
+        insert into tb_inputscore
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="studentNumber != null">student_number,</if>
+            <if test="studentName != null">student_name,</if>
+            <if test="firQue != null">fir_que,</if>
+            <if test="secQue != null">sec_que,</if>
+            <if test="thiQue != null">thi_que,</if>
+            <if test="fouQue != null">fou_que,</if>
+            <if test="fifQue != null">fif_que,</if>
+            <if test="sixQue != null">six_que,</if>
+            <if test="sevQue != null">sev_que,</if>
+            <if test="eigQue != null">eig_que,</if>
+            <if test="ninQue != null">nin_que,</if>
+            <if test="tenQue != null">ten_que,</if>
+            <if test="midtermSco != null">midterm_sco,</if>
+            <if test="homeworkSco != null">homework_sco,</if>
+            <if test="quizSco != null">quiz_sco,</if>
+            <if test="largeSco != null">large_sco,</if>
+            <if test="experimentSco != null">experiment_sco,</if>
+            <if test="replySco != null">reply_sco,</if>
+            <if test="thesisSco != null">thesis_sco,</if>
+            <if test="finalSco != null">final_sco,</if>
+            <if test="totalSco != null">total_sco,</if>
+            <if test="type != null">type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="studentNumber != null">#{studentNumber},</if>
+            <if test="studentName != null">#{studentName},</if>
+            <if test="firQue != null">#{firQue},</if>
+            <if test="secQue != null">#{secQue},</if>
+            <if test="thiQue != null">#{thiQue},</if>
+            <if test="fouQue != null">#{fouQue},</if>
+            <if test="fifQue != null">#{fifQue},</if>
+            <if test="sixQue != null">#{sixQue},</if>
+            <if test="sevQue != null">#{sevQue},</if>
+            <if test="eigQue != null">#{eigQue},</if>
+            <if test="ninQue != null">#{ninQue},</if>
+            <if test="tenQue != null">#{tenQue},</if>
+            <if test="midtermSco != null">#{midtermSco},</if>
+            <if test="homeworkSco != null">#{homeworkSco},</if>
+            <if test="quizSco != null">#{quizSco},</if>
+            <if test="largeSco != null">#{largeSco},</if>
+            <if test="experimentSco != null">#{experimentSco},</if>
+            <if test="replySco != null">#{replySco},</if>
+            <if test="thesisSco != null">#{thesisSco},</if>
+            <if test="finalSco != null">#{finalSco},</if>
+            <if test="totalSco != null">#{totalSco},</if>
+            <if test="type != null">#{type},</if>
+         </trim>
+    </insert>
+
+    <update id="updateInputscore" parameterType="Inputscore">
+        update tb_inputscore
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="studentNumber != null">student_number = #{studentNumber},</if>
+            <if test="studentName != null">student_name = #{studentName},</if>
+            <if test="firQue != null">fir_que = #{firQue},</if>
+            <if test="secQue != null">sec_que = #{secQue},</if>
+            <if test="thiQue != null">thi_que = #{thiQue},</if>
+            <if test="fouQue != null">fou_que = #{fouQue},</if>
+            <if test="fifQue != null">fif_que = #{fifQue},</if>
+            <if test="sixQue != null">six_que = #{sixQue},</if>
+            <if test="sevQue != null">sev_que = #{sevQue},</if>
+            <if test="eigQue != null">eig_que = #{eigQue},</if>
+            <if test="ninQue != null">nin_que = #{ninQue},</if>
+            <if test="tenQue != null">ten_que = #{tenQue},</if>
+            <if test="midtermSco != null">midterm_sco = #{midtermSco},</if>
+            <if test="homeworkSco != null">homework_sco = #{homeworkSco},</if>
+            <if test="quizSco != null">quiz_sco = #{quizSco},</if>
+            <if test="largeSco != null">large_sco = #{largeSco},</if>
+            <if test="experimentSco != null">experiment_sco = #{experimentSco},</if>
+            <if test="replySco != null">reply_sco = #{replySco},</if>
+            <if test="thesisSco != null">thesis_sco = #{thesisSco},</if>
+            <if test="finalSco != null">final_sco = #{finalSco},</if>
+            <if test="totalSco != null">total_sco = #{totalSco},</if>
+            <if test="type != null">type = #{type},</if>
+        </trim>
+        where id = #{id} and student_number=#{studentNumber}
+    </update>
+
+    <delete id="deleteInputscoreById" parameterType="Long">
+        delete from tb_inputscore where id = #{id}
+    </delete>
+
+    <delete id="deleteInputscoreByIds" parameterType="String">
+        delete from tb_inputscore where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <delete id="deleteInputscoreByIdAndNum">
+        delete from tb_inputscore
+        where id =#{id} and student_number = #{studentNumber}
+    </delete>
+
+    <select id="selectHighSco" resultType="java.math.BigDecimal">
+        select max(final_sco) from tb_inputscore where id = #{id}
+    </select>
+
+    <select id="selectLowSco" resultType="java.math.BigDecimal">
+        select min(final_sco) from tb_inputscore where id=#{id} and final_sco>0;
+    </select>
+    <select id="selectninNum1" resultType="java.lang.Integer">
+        select count(*) from tb_inputscore where id=#{id} and final_sco >= 90;
+    </select>
+    <select id="selecteigNum1" resultType="java.lang.Integer">
+        select count(*) from tb_inputscore where id=#{id} and final_sco >=80 and final_sco  &lt; 90;
+    </select>
+    <select id="selectsevNum1" resultType="java.lang.Integer">
+        select count(*) from tb_inputscore where id=#{id} and final_sco >=70 and final_sco  &lt; 80;
+    </select>
+    <select id="selectsixNum1" resultType="java.lang.Integer">
+        select count(*) from tb_inputscore where id=#{id} and final_sco >=60 and final_sco &lt; 70;
+    </select>
+    <select id="selectlowNum1" resultType="java.lang.Integer">
+        select count(*) from tb_inputscore where id=#{id} and final_sco >0 and final_sco &lt; 60;
+    </select>
+    <select id="selectninNum2" resultType="java.lang.Integer">
+        select count(*) from tb_inputscore where id=#{id} and total_sco >= 90;
+    </select>
+    <select id="selecteigNum2" resultType="java.lang.Integer">
+        select count(*) from tb_inputscore where id=#{id} and total_sco >=80 and total_sco  &lt; 90;
+    </select>
+    <select id="selectsevNum2" resultType="java.lang.Integer">
+        select count(*) from tb_inputscore where id=#{id} and total_sco >=70 and total_sco  &lt; 80;
+    </select>
+    <select id="selectsixNum2" resultType="java.lang.Integer">
+        select count(*) from tb_inputscore where id=#{id} and total_sco >=60 and total_sco &lt; 70;
+    </select>
+    <select id="selectlowNum2" resultType="java.lang.Integer">
+        select count(*) from tb_inputscore where id=#{id} and total_sco >0 and total_sco &lt; 60;
+    </select>
+    <select id="selectEvaluationpahseByCourseIdList" parameterType="Inputscore" resultMap="InputscoreResult">
+        <include refid="selectInputscoreVo"/>
+        where course_id in
+        <foreach item="courseId" collection="list" open="(" separator="," close=")">
+            #{courseId}
+        </foreach>
+    </select>
+
+
+</mapper>

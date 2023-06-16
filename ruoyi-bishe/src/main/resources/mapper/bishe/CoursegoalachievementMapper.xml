@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.bishe.mapper.CoursegoalachievementMapper">
+    
+    <resultMap type="Coursegoalachievement" id="CoursegoalachievementResult">
+        <result property="courseId"    column="course_id"    />
+        <result property="courseObjectives"    column="course_objectives"    />
+        <result property="firRatio"    column="fir_ratio"    />
+        <result property="secRatio"    column="sec_ratio"    />
+        <result property="thiRatio"    column="thi_ratio"    />
+        <result property="fouRatio"    column="fou_ratio"    />
+        <result property="fifRatio"    column="fif_ratio"    />
+        <result property="sixRatio"    column="six_ratio"    />
+        <result property="sevRatio"    column="sev_ratio"    />
+        <result property="eigRatio"    column="eig_ratio"    />
+        <result property="ninRatio"    column="nin_ratio"    />
+        <result property="tenRatio"    column="ten_ratio"    />
+        <result property="midtermRatio"    column="midterm_ratio"    />
+        <result property="homeworkRatio"    column="homework_ratio"    />
+        <result property="quizRatio"    column="quiz_ratio"    />
+        <result property="largeRatio"    column="large_ratio"    />
+        <result property="experimentRatio"    column="experiment_ratio"    />
+        <result property="replyRatio"    column="reply_ratio"    />
+        <result property="thesisRatio"    column="thesis_ratio"    />
+    </resultMap>
+
+    <sql id="selectCoursegoalachievementVo">
+        select course_id, course_objectives, fir_ratio, sec_ratio, thi_ratio, fou_ratio, fif_ratio, six_ratio, sev_ratio, eig_ratio, nin_ratio, ten_ratio, midterm_ratio, homework_ratio, quiz_ratio, large_ratio, experiment_ratio, reply_ratio, thesis_ratio from tb_coursegoalachievement
+    </sql>
+
+    <select id="selectCoursegoalachievementList" parameterType="Coursegoalachievement" resultMap="CoursegoalachievementResult">
+        <include refid="selectCoursegoalachievementVo"/>
+        <where>  
+            <if test="courseId != null "> and course_id = #{courseId}</if>
+        </where>
+    </select>
+    
+    <select id="selectCoursegoalachievementByCourseId" parameterType="Integer" resultMap="CoursegoalachievementResult">
+        <include refid="selectCoursegoalachievementVo"/>
+        where course_id = #{courseId}
+    </select>
+
+
+    <insert id="insertCoursegoalachievement" parameterType="Coursegoalachievement">
+        insert into tb_coursegoalachievement
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">course_id,</if>
+            <if test="courseObjectives != null">course_objectives,</if>
+            <if test="firRatio != null">fir_ratio,</if>
+            <if test="secRatio != null">sec_ratio,</if>
+            <if test="thiRatio != null">thi_ratio,</if>
+            <if test="fouRatio != null">fou_ratio,</if>
+            <if test="fifRatio != null">fif_ratio,</if>
+            <if test="sixRatio != null">six_ratio,</if>
+            <if test="sevRatio != null">sev_ratio,</if>
+            <if test="eigRatio != null">eig_ratio,</if>
+            <if test="ninRatio != null">nin_ratio,</if>
+            <if test="tenRatio != null">ten_ratio,</if>
+            <if test="midtermRatio != null">midterm_ratio,</if>
+            <if test="homeworkRatio != null">homework_ratio,</if>
+            <if test="quizRatio != null">quiz_ratio,</if>
+            <if test="largeRatio != null">large_ratio,</if>
+            <if test="experimentRatio != null">experiment_ratio,</if>
+            <if test="replyRatio != null">reply_ratio,</if>
+            <if test="thesisRatio != null">thesis_ratio,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">#{courseId},</if>
+            <if test="courseObjectives != null">#{courseObjectives},</if>
+            <if test="firRatio != null">#{firRatio},</if>
+            <if test="secRatio != null">#{secRatio},</if>
+            <if test="thiRatio != null">#{thiRatio},</if>
+            <if test="fouRatio != null">#{fouRatio},</if>
+            <if test="fifRatio != null">#{fifRatio},</if>
+            <if test="sixRatio != null">#{sixRatio},</if>
+            <if test="sevRatio != null">#{sevRatio},</if>
+            <if test="eigRatio != null">#{eigRatio},</if>
+            <if test="ninRatio != null">#{ninRatio},</if>
+            <if test="tenRatio != null">#{tenRatio},</if>
+            <if test="midtermRatio != null">#{midtermRatio},</if>
+            <if test="homeworkRatio != null">#{homeworkRatio},</if>
+            <if test="quizRatio != null">#{quizRatio},</if>
+            <if test="largeRatio != null">#{largeRatio},</if>
+            <if test="experimentRatio != null">#{experimentRatio},</if>
+            <if test="replyRatio != null">#{replyRatio},</if>
+            <if test="thesisRatio != null">#{thesisRatio},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCoursegoalachievement" parameterType="Coursegoalachievement">
+        update tb_coursegoalachievement
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="courseObjectives != null">course_objectives = #{courseObjectives},</if>
+            <if test="firRatio != null">fir_ratio = #{firRatio},</if>
+            <if test="secRatio != null">sec_ratio = #{secRatio},</if>
+            <if test="thiRatio != null">thi_ratio = #{thiRatio},</if>
+            <if test="fouRatio != null">fou_ratio = #{fouRatio},</if>
+            <if test="fifRatio != null">fif_ratio = #{fifRatio},</if>
+            <if test="sixRatio != null">six_ratio = #{sixRatio},</if>
+            <if test="sevRatio != null">sev_ratio = #{sevRatio},</if>
+            <if test="eigRatio != null">eig_ratio = #{eigRatio},</if>
+            <if test="ninRatio != null">nin_ratio = #{ninRatio},</if>
+            <if test="tenRatio != null">ten_ratio = #{tenRatio},</if>
+            <if test="midtermRatio != null">midterm_ratio = #{midtermRatio},</if>
+            <if test="homeworkRatio != null">homework_ratio = #{homeworkRatio},</if>
+            <if test="quizRatio != null">quiz_ratio = #{quizRatio},</if>
+            <if test="largeRatio != null">large_ratio = #{largeRatio},</if>
+            <if test="experimentRatio != null">experiment_ratio = #{experimentRatio},</if>
+            <if test="replyRatio != null">reply_ratio = #{replyRatio},</if>
+            <if test="thesisRatio != null">thesis_ratio = #{thesisRatio},</if>
+        </trim>
+        where course_id = #{courseId}
+    </update>
+
+    <delete id="deleteCoursegoalachievementByCourseId" parameterType="Integer">
+        delete from tb_coursegoalachievement where course_id = #{courseId}
+    </delete>
+
+    <delete id="deleteCoursegoalachievementByCourseIds" parameterType="String">
+        delete from tb_coursegoalachievement where course_id in 
+        <foreach item="courseId" collection="array" open="(" separator="," close=")">
+            #{courseId}
+        </foreach>
+    </delete>
+    <delete id="deleteCoursegoalachievementByCourseIdAndObj">
+        delete from tb_coursegoalachievement
+        where course_id = #{courseId} and course_objectives =#{courseObjectives}
+    </delete>
+
+    <select id="selectDataByCourseIdandCourseObjectives" resultMap="CoursegoalachievementResult" resultType="com.ruoyi.bishe.domain.Coursegoalachievement">
+        <include refid="selectCoursegoalachievementVo"/>
+        where course_id = #{courseId} and course_objectives = #{courseObjectives}
+    </select>
+    <select id="selectCoursegoalachievementByCourseIdList"
+            parameterType="Coursegoalachievement" resultMap="CoursegoalachievementResult">
+        <include refid="selectCoursegoalachievementVo"/>
+        where course_id in
+        <foreach item="courseId" collection="list" open="(" separator="," close=")">
+            #{courseId}
+        </foreach>
+    </select>
+</mapper>

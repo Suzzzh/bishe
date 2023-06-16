@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.bishe.mapper.FailMapper">
+    
+    <resultMap type="Fail" id="FailResult">
+        <result property="courseId"    column="course_id"    />
+        <result property="courseName"    column="course_name"    />
+        <result property="studentNumber"    column="student_number"    />
+        <result property="studentName"    column="student_name"    />
+        <result property="major"    column="major"    />
+    </resultMap>
+
+    <sql id="selectFailVo">
+        select course_id, course_name, student_number, student_name, major from tb_fail
+    </sql>
+
+    <select id="selectFailList" parameterType="Fail" resultMap="FailResult">
+        <include refid="selectFailVo"/>
+        <where>  
+            <if test="courseId != null "> and course_id = #{courseId}</if>
+            <if test="courseName != null  and courseName != ''"> and course_name like concat('%', #{courseName}, '%')</if>
+            <if test="studentNumber != null  and studentNumber != ''"> and student_number = #{studentNumber}</if>
+            <if test="studentName != null  and studentName != ''"> and student_name like concat('%', #{studentName}, '%')</if>
+            <if test="major != null  and major != ''"> and major = #{major}</if>
+        </where>
+    </select>
+    
+    <select id="selectFailByCourseId" parameterType="Integer" resultMap="FailResult">
+        <include refid="selectFailVo"/>
+        where course_id = #{courseId}
+    </select>
+    <select id="selectEvaluationpahseByCourseIdList" parameterType="Fail" resultMap="FailResult">
+        <include refid="selectFailVo"/>
+        where course_id in
+        <foreach item="courseId" collection="list" open="(" separator="," close=")">
+            #{courseId}
+        </foreach>
+    </select>
+
+    <insert id="insertFail" parameterType="Fail">
+        insert into tb_fail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">course_id,</if>
+            <if test="courseName != null">course_name,</if>
+            <if test="studentNumber != null">student_number,</if>
+            <if test="studentName != null">student_name,</if>
+            <if test="major != null">major,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">#{courseId},</if>
+            <if test="courseName != null">#{courseName},</if>
+            <if test="studentNumber != null">#{studentNumber},</if>
+            <if test="studentName != null">#{studentName},</if>
+            <if test="major != null">#{major},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFail" parameterType="Fail">
+        update tb_fail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="courseName != null">course_name = #{courseName},</if>
+            <if test="studentNumber != null">student_number = #{studentNumber},</if>
+            <if test="studentName != null">student_name = #{studentName},</if>
+            <if test="major != null">major = #{major},</if>
+        </trim>
+        where course_id = #{courseId}
+    </update>
+
+    <delete id="deleteFailByCourseId" parameterType="Integer">
+        delete from tb_fail where course_id = #{courseId}
+    </delete>
+
+    <delete id="deleteFailByCourseIds" parameterType="String">
+        delete from tb_fail where course_id in 
+        <foreach item="courseId" collection="array" open="(" separator="," close=")">
+            #{courseId}
+        </foreach>
+    </delete>
+</mapper>

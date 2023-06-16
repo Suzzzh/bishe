@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.bishe.mapper.UserMapper">
+    
+    <resultMap type="User" id="UserResult">
+        <result property="userId"    column="user_id"    />
+        <result property="username"    column="username"    />
+        <result property="password"    column="password"    />
+        <result property="role"    column="role"    />
+        <result property="fatherId"    column="father_id"    />
+        <result property="major"    column="major"    />
+    </resultMap>
+
+    <sql id="selectUserVo">
+        select user_id, username, password, role, father_id, major from tb_user
+    </sql>
+
+    <select id="selectUserList" parameterType="User" resultMap="UserResult">
+        <include refid="selectUserVo"/>
+        <where>  
+            <if test="username != null  and username != ''"> and username like concat('%', #{username}, '%')</if>
+            <if test="password != null  and password != ''"> and password = #{password}</if>
+            <if test="role != null "> and role = #{role}</if>
+            <if test="fatherId != null "> and father_id = #{fatherId}</if>
+            <if test="major != null  and major != ''"> and major = #{major}</if>
+        </where>
+    </select>
+    
+    <select id="selectUserByUserId" parameterType="Integer" resultMap="UserResult">
+        <include refid="selectUserVo"/>
+        where user_id = #{userId}
+    </select>
+        
+    <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="userId">
+        insert into tb_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null and username != ''">username,</if>
+            <if test="password != null and password != ''">password,</if>
+            <if test="role != null">role,</if>
+            <if test="fatherId != null">father_id,</if>
+            <if test="major != null">major,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="username != null and username != ''">#{username},</if>
+            <if test="password != null and password != ''">#{password},</if>
+            <if test="role != null">#{role},</if>
+            <if test="fatherId != null">#{fatherId},</if>
+            <if test="major != null">#{major},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUser" parameterType="User">
+        update tb_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="username != null and username != ''">username = #{username},</if>
+            <if test="password != null and password != ''">password = #{password},</if>
+            <if test="role != null">role = #{role},</if>
+            <if test="fatherId != null">father_id = #{fatherId},</if>
+            <if test="major != null">major = #{major},</if>
+        </trim>
+        where user_id = #{userId}
+    </update>
+
+    <delete id="deleteUserByUserId" parameterType="Integer">
+        delete from tb_user where user_id = #{userId}
+    </delete>
+
+    <delete id="deleteUserByUserIds" parameterType="String">
+        delete from tb_user where user_id in 
+        <foreach item="userId" collection="array" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </delete>
+</mapper>
